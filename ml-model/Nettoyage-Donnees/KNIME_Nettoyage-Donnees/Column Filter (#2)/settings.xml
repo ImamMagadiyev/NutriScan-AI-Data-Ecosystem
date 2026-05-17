@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="http://www.knime.org/2008/09/XMLConfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.knime.org/2008/09/XMLConfig http://www.knime.org/XMLConfig_2008_09.xsd" key="settings.xml">
+    <entry key="node_file" type="xstring" value="settings.xml"/>
+    <config key="flow_stack"/>
+    <config key="internal_node_subsettings">
+        <entry key="memory_policy" type="xstring" value="CacheSmallInMemory"/>
+    </config>
+    <config key="model">
+        <config key="column-filter">
+            <entry key="filter-type" type="xstring" value="STANDARD"/>
+            <config key="included_names">
+                <entry key="array-size" type="xint" value="19"/>
+                <entry key="0" type="xstring" value="product_name"/>
+                <entry key="1" type="xstring" value="brands_tags"/>
+                <entry key="2" type="xstring" value="categories_en"/>
+                <entry key="3" type="xstring" value="countries_en"/>
+                <entry key="4" type="xstring" value="ingredients_text"/>
+                <entry key="5" type="xstring" value="states_en"/>
+                <entry key="6" type="xstring" value="energy_100g"/>
+                <entry key="7" type="xstring" value="fat_100g"/>
+                <entry key="8" type="xstring" value="saturated-fat_100g"/>
+                <entry key="9" type="xstring" value="carbohydrates_100g"/>
+                <entry key="10" type="xstring" value="sugars_100g"/>
+                <entry key="11" type="xstring" value="fiber_100g"/>
+                <entry key="12" type="xstring" value="proteins_100g"/>
+                <entry key="13" type="xstring" value="salt_100g"/>
+                <entry key="14" type="xstring" value="sodium_100g"/>
+                <entry key="15" type="xstring" value="calcium_100g"/>
+                <entry key="16" type="xstring" value="iron_100g"/>
+                <entry key="17" type="xstring" value="code"/>
+                <entry key="18" type="xstring" value="nutrition-score-fr_100g"/>
+            </config>
+            <config key="excluded_names">
+                <entry key="array-size" type="xint" value="12"/>
+                <entry key="0" type="xstring" value="cholesterol_100g"/>
+                <entry key="1" type="xstring" value="vitamin-c_100g"/>
+                <entry key="2" type="xstring" value="energy-from-fat_100g"/>
+                <entry key="3" type="xstring" value="monounsaturated-fat_100g"/>
+                <entry key="4" type="xstring" value="polyunsaturated-fat_100g"/>
+                <entry key="5" type="xstring" value="trans-fat_100g"/>
+                <entry key="6" type="xstring" value="alcohol_100g"/>
+                <entry key="7" type="xstring" value="potassium_100g"/>
+                <entry key="8" type="xstring" value="additives"/>
+                <entry key="9" type="xstring" value="allergens_en"/>
+                <entry key="10" type="xstring" value="traces_en"/>
+                <entry key="11" type="xstring" value="labels_tags"/>
+            </config>
+            <entry key="enforce_option" type="xstring" value="EnforceInclusion"/>
+            <config key="name_pattern">
+                <entry key="pattern" type="xstring" value=""/>
+                <entry key="caseSensitive" type="xboolean" value="true"/>
+                <entry key="excludeMatching" type="xboolean" value="false"/>
+                <entry key="type" type="xstring" value="Wildcard"/>
+            </config>
+            <config key="datatype">
+                <config key="typelist"/>
+            </config>
+        </config>
+    </config>
+    <config key="variables"/>
+    <entry key="customDescription" type="xstring" isnull="true" value=""/>
+    <entry key="state" type="xstring" value="EXECUTED"/>
+    <entry key="factory" type="xstring" value="org.knime.base.node.preproc.filter.column.DataColumnSpecFilterNodeFactory"/>
+    <entry key="node-name" type="xstring" value="Column Filter"/>
+    <entry key="node-bundle-name" type="xstring" value="KNIME Base Nodes"/>
+    <entry key="node-bundle-symbolic-name" type="xstring" value="org.knime.base"/>
+    <entry key="node-bundle-vendor" type="xstring" value="KNIME AG, Zurich, Switzerland"/>
+    <entry key="node-bundle-version" type="xstring" value="5.10.0.v202602041719"/>
+    <entry key="node-feature-name" type="xstring" value="KNIME Base nodes"/>
+    <entry key="node-feature-symbolic-name" type="xstring" value="org.knime.features.base.feature.group"/>
+    <entry key="node-feature-vendor" type="xstring" value="KNIME AG, Zurich, Switzerland"/>
+    <entry key="node-feature-version" type="xstring" value="5.10.0.v202602041719"/>
+    <config key="factory_settings"/>
+    <entry key="name" type="xstring" value="Column Filter"/>
+    <entry key="hasContent" type="xboolean" value="true"/>
+    <entry key="isInactive" type="xboolean" value="false"/>
+    <config key="ports">
+        <config key="port_1">
+            <entry key="index" type="xint" value="1"/>
+            <entry key="port_spec_class" type="xstring" value="org.knime.core.data.DataTableSpec"/>
+            <entry key="port_object_class" type="xstring" value="org.knime.core.node.BufferedDataTable"/>
+            <entry key="port_object_summary" type="xstring" value="Rows: 9984, Cols: 19"/>
+            <entry key="port_dir_location" type="xstring" value="port_1"/>
+        </config>
+    </config>
+    <config key="filestores">
+        <entry key="file_store_location" type="xstring" isnull="true" value=""/>
+        <entry key="file_store_id" type="xstring" value="03b72fc4-573c-4bc5-b255-517de5a0d9eb"/>
+    </config>
+</config>

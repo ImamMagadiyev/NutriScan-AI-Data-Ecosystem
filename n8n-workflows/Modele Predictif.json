@@ -1,0 +1,109 @@
+{
+  "name": "Modele Predictif",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/scan-produit",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "52186144-8c3c-46c0-a7d2-84ad722361f2",
+      "name": "Webhook",
+      "webhookId": "bd9621fd-40c4-4c48-9f65-9e36a0fea495"
+    },
+    {
+      "parameters": {
+        "url": "=https://world.openfoodfacts.org/api/v0/product/{{$json.body.code}}.json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        240,
+        0
+      ],
+      "id": "a560a839-24bb-417f-bcef-aa1210ff7f81",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        656,
+        0
+      ],
+      "id": "60ad0091-74a2-4d70-8ce2-f72afcac9910",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const product = $input.first().json.product;\nconst nutriments = product.nutriments || {};\n\n// Récupération des valeurs //\n// --- Valeurs nutritionnelles pour 100g --- //\nconst energy   = nutriments['energy-kj_100g'] || 0;\nconst fat      = nutriments['fat_100g'] || 0;\nconst sat_fat  = nutriments['saturated-fat_100g'] || 0;\nconst sugar    = nutriments['sugars_100g'] || 0;\nconst salt     = nutriments['salt_100g'] || 0;\nconst fiber    = nutriments['fiber_100g'] || 0;\nconst proteins = nutriments['proteins_100g'] || 0;\nconst fruits   = nutriments['fruits-vegetables-nuts-estimate-from-ingredients_100g'] || 0;\n\n// --- Points négatifs (N) : plus c'est élevé, plus c'est mauvais --- //\nconst n_energy  = energy > 3350 ? 10 : energy > 3015 ? 9 : energy > 2680 ? 8 : energy > 2345 ? 7 : energy > 2010 ? 6 : energy > 1675 ? 5 : energy > 1340 ? 4 : energy > 1005 ? 3 : energy > 670 ? 2 : energy > 335 ? 1 : 0;\nconst n_sugar   = sugar > 45 ? 10 : sugar > 36 ? 9 : sugar > 27 ? 7 : sugar > 18 ? 6 : sugar > 9 ? 3 : sugar > 4.5 ? 1 : 0;\nconst n_sat_fat = sat_fat > 10 ? 10 : sat_fat > 8 ? 9 : sat_fat > 6 ? 7 : sat_fat > 4 ? 6 : sat_fat > 2 ? 3 : sat_fat > 1 ? 1 : 0;\nconst n_salt    = salt > 2.3 ? 10 : salt > 1.5 ? 9 : salt > 0.9 ? 7 : salt > 0.6 ? 6 : salt > 0.3 ? 3 : salt > 0.15 ? 1 : 0;\nconst N = n_energy + n_sugar + n_sat_fat + n_salt;\n\n// --- Points positifs (P) : réduisent le score final --- //\nconst p_fiber = fiber > 4.7 ? 5 : fiber > 3.7 ? 4 : fiber > 2.8 ? 3 : fiber > 1.9 ? 2 : fiber > 0.9 ? 1 : 0;\nconst p_proteins = proteins > 8 ? 5 : proteins > 6.4 ? 4 : proteins > 4.8 ? 3 : proteins > 3.2 ? 2 : proteins > 1.6 ? 1 : 0;\nconst p_fruits = fruits > 80 ? 5 : fruits > 60 ? 2 : fruits > 40 ? 1 : 0;\n\n// Règle FSA : si produit très mauvais et peu de fruits, les protéines ne compensent pas //\nconst P = (N >= 11 && p_fruits <= 1) ? p_fiber + p_fruits : p_fiber + p_proteins + p_fruits;\n\n// --- Score final = mauvais - bons --- //\nconst score = N - P;\n\n// --- Attribution de la lettre selon le score --- //\nconst grade = score <= -1 ? 'A' : score <= 2 ? 'B' : score <= 10 ? 'C' : score <= 18 ? 'D' : 'E';\n\n// --- Résultat retourné à l'app mobile --- //\nreturn [{\n  json: {\n    product_name:        product.product_name || 'Inconnu',\n    brands:              product.brands || 'Inconnu',\n    nutriscore_predit:   grade,\n    nutriscore_officiel: product.nutrition_grades || 'Non disponible',\n    score_numerique:     score,\n    fat:       fat,\n    sugar:     sugar,\n    salt:      salt,\n    proteins:  proteins,\n    fiber:     fiber,\n    energy_kj: energy,\n    sat_fat:   sat_fat,\n    fruits_veg:fruits,\n    image_url: product.image_front_url || product.image_url || null\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "b6851095-a2b5-47ae-91d1-f6fbad78b653",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6d62f41f-6ec5-4763-9aa1-126a580a302b",
+  "meta": {
+    "instanceId": "5fd4196c66a7ca6be9b25798b43347afa703a6a967bc1f17ac90c1dd8e3d93c0"
+  },
+  "id": "fftc3W42q2GwhuaG",
+  "tags": []
+}
