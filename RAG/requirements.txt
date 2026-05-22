@@ -1,0 +1,12 @@
+langchain
+langchain-huggingface
+langchain-community
+langchain-core
+langchain-mistralai
+python-dotenv
+pandas
+requests
+scikit-learn
+faiss-cpu
+sentence-transformers
+ipykernel
