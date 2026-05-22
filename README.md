@@ -71,7 +71,12 @@ Le dataset source `en.openfoodfacts.org.products.csv` provient de
 À télécharger séparément avant de lancer les scripts.
 
 ## 👤 Auteur
-**Imam Magadiyev** — [GitHub](https://github.com/ImamMagadiyev)
+**Imam Magadiyev** 
+**HISABU Nathan Tekeste**
+**SENTAYEHU Yeadonaye Ashenafi**
+**BASSET Adrien**
+**HILAIRE Kenny**
 
 ## 🏫 Contexte
-Projet réalisé dans le cadre de [ta formation] — 2026
+Projet réalisé dans le cadre du BUT Informatique 2ème année,
+parcours Administration, Gestion et Exploitation des Données — 2026
